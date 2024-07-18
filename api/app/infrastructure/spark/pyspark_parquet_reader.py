@@ -1,6 +1,6 @@
 from pyspark.sql import SparkSession
 
-from api.app.infrastructure.spark.pyspark_reader import SQLSparkReader, SparkParquetReader
+from app.infrastructure.spark.pyspark_reader import SQLSparkReader, SparkParquetReader
 
 
 class SparkParquetSQLReader:
