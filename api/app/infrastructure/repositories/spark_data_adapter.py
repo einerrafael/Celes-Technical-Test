@@ -2,6 +2,7 @@ from typing import List
 
 from app.domain.entities.employee import Employee, Sale
 from app.domain.entities.product import Product
+from app.domain.entities.store import Store
 
 
 class SparkDataAdapter:
@@ -50,3 +51,19 @@ class SparkDataAdapter:
     @classmethod
     def parse_rows_to_sales(cls, rows: list) -> List[Sale]:
         return [cls.parse_row_to_sale(row) for row in rows]
+
+    @staticmethod
+    def parse_row_to_store(row) -> Store:
+        return Store(
+            key=row[0].__getitem__('KeyStore'),
+            code=row[0].__getitem__('StoreCode'),
+            name=row[0].__getitem__('StoreName'),
+            country=row[0].__getitem__('Country'),
+            city=row[0].__getitem__('City'),
+            province=row[0].__getitem__('Province'),
+            type=row[0].__getitem__('StoreType'),
+        )
+
+    @classmethod
+    def parse_rows_to_stores(cls, rows: list) -> List[Store]:
+        return [cls.parse_row_to_store(row) for row in rows]

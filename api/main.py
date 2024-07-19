@@ -4,6 +4,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from app.infrastructure.api.route_employee import route_employee
 from app.infrastructure.api.route_products import route_product
+from app.infrastructure.api.route_stores import route_stores
 
 fast_api_app = FastAPI()
 
@@ -25,6 +26,7 @@ API_PREFIX = '/api'
 
 fast_api_app.include_router(route_employee, prefix=f"{API_PREFIX}/employees", tags=["employees"])
 fast_api_app.include_router(route_product, prefix=f"{API_PREFIX}/products", tags=["products"])
+fast_api_app.include_router(route_stores, prefix=f"{API_PREFIX}/stores", tags=["stores"])
 
 
 if __name__ == '__main__':

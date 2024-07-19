@@ -6,30 +6,30 @@ from fastapi import APIRouter, HTTPException
 from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 
 from app.application.dto.all import PaginateDTO, ResponseMessage, ResponseMessageCode, ResponseStatus
-from app.application.dto.employees import SalesProductFilterDTO
-from app.application.use_cases.crud_product import CRUDProduct
+from app.application.dto.employees import SalesStoreFilterDTO
+from app.application.use_cases.crud_stores import CRUDStores
 from app.application.use_cases.sales_information import SalesInformation
 from app.infrastructure.api.statuses import ResultsNotFound
 from app.infrastructure.factory.repository_factory import RepositoryFactory
 
-route_product = APIRouter()
+route_stores = APIRouter()
 
 logger = logging.getLogger(__name__)
 
 
-@route_product.get("/")
-def all_products(page: int = 1,
-                 limit: int = 10, ):
+@route_stores.get("/")
+def all_stores(page: int = 1,
+               limit: int = 10, ):
     try:
         pagination = PaginateDTO(
             page=page,
             limit=limit
         )
-        crud = CRUDProduct(
-            product_repository=RepositoryFactory.get_product_repository()
+        crud = CRUDStores(
+            stores_repository=RepositoryFactory.get_store_repository()
         )
 
-        return crud.all_products(pagination)
+        return crud.all(pagination)
     except ResultsNotFound as nf:
         return ResponseMessage(
             code=ResponseMessageCode.EMPTY_RESULTS,
@@ -42,11 +42,11 @@ def all_products(page: int = 1,
         raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="error")
 
 
-@route_product.get("/{_id}")
+@route_stores.get("/{_id}")
 def get_product_by_id(_id: str, ):
     try:
-        crud = CRUDProduct(
-            product_repository=RepositoryFactory.get_product_repository()
+        crud = CRUDStores(
+            stores_repository=RepositoryFactory.get_store_repository()
         )
 
         return crud.get_by_id(_id)
@@ -62,7 +62,7 @@ def get_product_by_id(_id: str, ):
         raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="error")
 
 
-@route_product.get("/{_id}/sales")
+@route_stores.get("/{_id}/sales")
 def employee_sales(_id: str,
                    page: int = 1,
                    limit: int = 10,
@@ -70,8 +70,8 @@ def employee_sales(_id: str,
                    end_date: Union[datetime, None] = None, ):
     try:
         # Check the data
-        input_dto = SalesProductFilterDTO(
-            product_id=_id,
+        input_dto = SalesStoreFilterDTO(
+            store_id=_id,
             start_date=start_date,
             end_date=end_date,
             pagination=PaginateDTO(
@@ -87,7 +87,7 @@ def employee_sales(_id: str,
             store_repository=RepositoryFactory.get_store_repository(),
         )
 
-        return sales_information.all_sales_product(input_dto)
+        return sales_information.all_sales_store(input_dto)
     except ResultsNotFound as nf:
         return ResponseMessage(
             code=ResponseMessageCode.EMPTY_RESULTS,

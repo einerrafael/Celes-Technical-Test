@@ -10,7 +10,7 @@ from app.application.dto.employees import SalesEmployeeFilterDTO
 from app.application.use_cases.crud_employee import CRUDEmployee
 from app.application.use_cases.sales_information import SalesInformation
 from app.infrastructure.api.statuses import ResultsNotFound
-from app.infrastructure.repositories.spark_employee_repository import SparkEmployeeRepository
+from app.infrastructure.factory.repository_factory import RepositoryFactory
 
 route_employee = APIRouter()
 
@@ -28,7 +28,7 @@ def all_employees(page: int = 1,
 
         # Invoke the business logic
         crud_employee = CRUDEmployee(
-            employee_repository=SparkEmployeeRepository()
+            employee_repository=RepositoryFactory.get_employee_repository(),
         )
 
         return crud_employee.all_employees(pagination)
@@ -49,7 +49,7 @@ def get_employee_by_id(employee_id: str, ):
     try:
         # Invoke the business logic
         crud_employee = CRUDEmployee(
-            employee_repository=SparkEmployeeRepository()
+            employee_repository=RepositoryFactory.get_employee_repository(),
         )
 
         return crud_employee.get_by_id(employee_id)
@@ -85,10 +85,12 @@ def employee_sales(employee_id: str,
 
         # Invoke the business logic
         sales_employee = SalesInformation(
-            employee_repository=SparkEmployeeRepository()
+            employee_repository=RepositoryFactory.get_employee_repository(),
+            product_repository=RepositoryFactory.get_product_repository(),
+            store_repository=RepositoryFactory.get_store_repository(),
         )
 
-        return sales_employee.total_sales_employee(input_dto)
+        return sales_employee.all_sales_employee(input_dto)
     except ResultsNotFound as nf:
         return ResponseMessage(
             code=ResponseMessageCode.EMPTY_RESULTS,

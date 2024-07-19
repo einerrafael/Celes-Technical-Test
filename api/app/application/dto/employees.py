@@ -18,3 +18,7 @@ class SalesEmployeeFilterDTO(FilterDateRangesDTOWithPag, BaseModel):
 
 class SalesProductFilterDTO(FilterDateRangesDTOWithPag, BaseModel):
     product_id: str
+
+
+class SalesStoreFilterDTO(FilterDateRangesDTOWithPag, BaseModel):
+    store_id: str
