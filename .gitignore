@@ -162,5 +162,5 @@ cython_debug/
 .idea/
 
 # For Project Structure
-api/assets/data
-api/assets/credentials
+api/assets/data/parquets/*.parquet
+api/assets/credentials/*.json
