@@ -1,27 +1,14 @@
 from datetime import datetime
 from typing import Optional, List
 
-from app.domain.entities.employee import Employee
+from app.domain.entities.employee import Employee, Sale
 from app.domain.repositories import EmployeeRepository
 from app.infrastructure.commons.date_utils import DateUtils
+from app.infrastructure.repositories.spark_data_adapter import SparkDataAdapter
 from app.infrastructure.spark_session_builder import SparkSessionBuilder, SparkSessionSQLBuilder
 
 
 class SparkEmployeeRepository(EmployeeRepository):
-
-    @staticmethod
-    def parse_row_to_employee(row: list) -> Employee:
-        return Employee(
-            key=row[0].__getitem__('KeyEmployee'),
-            code=row[0].__getitem__('EmployeeCode'),
-            division=row[0].__getitem__('KeyDivision'),
-            name=row[0].__getitem__('EmployeeName'),
-            position=row[0].__getitem__('JobPosition'),
-        )
-
-    @classmethod
-    def parse_rows_to_employees(cls, rows: list) -> List[Employee]:
-        return [cls.parse_row_to_employee(row) for row in rows]
 
     def all_sales_by_employee(self, employee_id: str, limit: int, offset: int):
         pass
@@ -67,7 +54,7 @@ class SparkEmployeeRepository(EmployeeRepository):
                 total_query = reader.execute(query_count, args)
                 total = total_query.collect()[0]['total']
 
-                return self.parse_rows_to_employees(results), total
+                return SparkDataAdapter.parse_rows_to_sales(results), total
 
     def get_all(self, limit: int = None, offset: int = None):
         sql = f"SELECT DISTINCT Employees FROM AllEmployees "
@@ -84,7 +71,7 @@ class SparkEmployeeRepository(EmployeeRepository):
                 total_query = reader.execute(sql_total)
                 total = total_query.collect()[0]['total']
 
-                return self.parse_rows_to_employees(results), total
+                return SparkDataAdapter.parse_rows_to_employees(results), total
 
     def get_by_id(self, _id: str) -> Optional[Employee]:
         with SparkSessionBuilder() as session:
