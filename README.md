@@ -6,7 +6,7 @@
 
 ### Requisitos
 
-* Java version > 18
+* Java version > 17
 * Python 3.9
 
 
@@ -47,3 +47,8 @@ $(env) fastapi dev main.py
 ```bash
 $(env) pytest
 ```
+
+### Next Steps
+
+* [Arquitectura](docs/architecture.md)
+* [Servicios/Api](docs/api.md)

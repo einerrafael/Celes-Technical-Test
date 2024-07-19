@@ -1,0 +1,367 @@
+{
+	"info": {
+		"_postman_id": "9b104eaa-69d1-40a9-87e6-1a41d6444eeb",
+		"name": "CelesTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4205031"
+	},
+	"item": [
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "sales_date_ranges",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/employees/1|18335/sales?page=1&limit=128",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"employees",
+								"1|18335",
+								"sales"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "128"
+								},
+								{
+									"key": "start_date",
+									"value": "2020-01-02",
+									"disabled": true
+								},
+								{
+									"key": "end_date",
+									"value": "2024-12-31",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/employees?page=1&limit=20",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"employees"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/employees/all/statistics",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"employees",
+								"all",
+								"statistics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/employees/1|17833/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"employees",
+								"1|17833",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "sales_date_ranges",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/products/1|59836/sales?page=1&limit=20&start_date=2023-10-16&end_date=2023-11-26",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products",
+								"1|59836",
+								"sales"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "start_date",
+									"value": "2023-10-16"
+								},
+								{
+									"key": "end_date",
+									"value": "2023-11-26"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/products?page=1&limit=20",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/products/1|59836/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products",
+								"1|59836",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/products/all/statistics",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"products",
+								"all",
+								"statistics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stores",
+			"item": [
+				{
+					"name": "sales_date_ranges",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/stores/1|021/sales?page=1&limit=20&start_date=2023-10-16&end_date=2023-11-26",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"stores",
+								"1|021",
+								"sales"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "start_date",
+									"value": "2023-10-16"
+								},
+								{
+									"key": "end_date",
+									"value": "2023-11-26"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/stores?page=1&limit=20",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"stores"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/stores/1|021/",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"stores",
+								"1|021",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{SERVER}}/stores/all/statistics",
+							"host": [
+								"{{SERVER}}"
+							],
+							"path": [
+								"stores",
+								"all",
+								"statistics"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SERVER",
+			"value": "http://127.0.0.1:8000/api",
+			"type": "string"
+		},
+		{
+			"key": "DOCKER_SERVER",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
