@@ -22,8 +22,6 @@ class SparkProductRepository(ProductRepository):
                                          f"SUM(Amount) as total"
                                          f" FROM {view_name} GROUP BY KeyProduct ORDER BY 2 desc")
                 results = results.collect()
-                if not any(results):
-                    raise ResultsNotFound()
                 return SparkDataAdapter.parse_rows_to_statistic(results)
 
     def sales_by_product_date_ranges(self,
@@ -86,8 +84,8 @@ class SparkProductRepository(ProductRepository):
     def get_by_id(self, _id: str) -> Optional[Product]:
         with SparkSessionBuilder() as session:
             with SparkSessionSQLBuilder(session, "ProductById") as reader:
-                results = reader.execute("SELECT Products FROM EmployeeById WHERE KeyProduct = {id}", {'id': _id})
+                results = reader.execute("SELECT Products FROM ProductById WHERE KeyProduct = {id}", {'id': _id})
                 results = results.collect()
                 if not any(results):
-                    raise ResultsNotFound()
+                    return None
                 return SparkDataAdapter.parse_row_to_product(results[0])

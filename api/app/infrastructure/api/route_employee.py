@@ -7,8 +7,8 @@ from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 
 from app.application.dto.all import PaginateDTO, ResponseMessage, ResponseMessageCode, ResponseStatus
 from app.application.dto.employees import SalesEmployeeFilterDTO
-from app.application.use_cases.crud_employee import CRUDEmployee
-from app.application.use_cases.sales_information import SalesInformation
+from app.application.uses_cases.crud_employee import CRUDEmployee
+from app.application.uses_cases.sales_information import SalesInformation
 from app.infrastructure.api.statuses import ResultsNotFound
 from app.infrastructure.factory.repository_factory import RepositoryFactory
 

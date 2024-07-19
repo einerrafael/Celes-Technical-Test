@@ -4,6 +4,7 @@ from typing import Optional
 from app.application.dto.all import PaginateDTO, PaginatedResults
 from app.domain.entities.employee import Employee
 from app.domain.repositories import EmployeeRepository
+from app.infrastructure.api.statuses import ResultsNotFound
 
 
 class CRUDEmployee:
@@ -14,6 +15,10 @@ class CRUDEmployee:
 
     def get_by_id(self, employee_id: str) -> Optional[Employee]:
         result = self.__employee_repository.get_by_id(employee_id)
+
+        if result is None:
+            raise ResultsNotFound()
+
         return result
 
     def all_employees(self, paginate: PaginateDTO) -> PaginatedResults:

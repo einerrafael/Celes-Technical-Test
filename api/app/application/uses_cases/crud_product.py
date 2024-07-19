@@ -4,6 +4,7 @@ from typing import Optional
 from app.application.dto.all import PaginateDTO, PaginatedResults
 from app.domain.entities.product import Product
 from app.domain.repositories import ProductRepository
+from app.infrastructure.api.statuses import ResultsNotFound
 
 
 class CRUDProduct:
@@ -14,6 +15,10 @@ class CRUDProduct:
 
     def get_by_id(self, _id: str) -> Optional[Product]:
         result = self.__product_repository.get_by_id(_id)
+
+        if result is None:
+            raise ResultsNotFound()
+
         return result
 
     def all_products(self, paginate: PaginateDTO) -> PaginatedResults:
