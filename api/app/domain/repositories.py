@@ -26,6 +26,10 @@ class EmployeeRepository(BaseRepository[Employee, str], ABC):
 class StoreRepository(BaseRepository[Store, str], ABC):
 
     @abstractmethod
+    def total_sales_avg(self):
+        pass
+
+    @abstractmethod
     def sales_by_store_date_ranges(self,
                                    _id: str,
                                    start_date: datetime,
@@ -36,6 +40,10 @@ class StoreRepository(BaseRepository[Store, str], ABC):
 
 
 class ProductRepository(BaseRepository[Product, str], ABC):
+
+    @abstractmethod
+    def total_sales_avg(self):
+        pass
 
     @abstractmethod
     def sales_by_product_date_ranges(self,

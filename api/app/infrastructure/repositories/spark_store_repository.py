@@ -11,6 +11,21 @@ from app.infrastructure.spark_session_builder import SparkSessionBuilder, SparkS
 
 class SparkStoreRepository(StoreRepository):
 
+    def total_sales_avg(self):
+        view_name = "TotalSalesAvgStore"
+
+        with SparkSessionBuilder() as session:
+            with SparkSessionSQLBuilder(session, view_name) as reader:
+                results = reader.execute(f"SELECT KeyStore as key, "
+                                         f"COUNT(KeyStore) as count, "
+                                         f"AVG(Amount) as avg, "
+                                         f"SUM(Amount) as total"
+                                         f" FROM {view_name} GROUP BY KeyStore ORDER BY 2 desc")
+                results = results.collect()
+                if not any(results):
+                    raise ResultsNotFound()
+                return SparkDataAdapter.parse_rows_to_statistic(results)
+
     def sales_by_store_date_ranges(self,
                                    _id: str,
                                    start_date: datetime,

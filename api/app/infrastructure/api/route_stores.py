@@ -98,3 +98,25 @@ def employee_sales(_id: str,
     except Exception as ex:
         logger.exception(ex)
         raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="error")
+
+
+@route_stores.get("/all/statistics")
+def statistics_stores():
+    try:
+        sales_info = SalesInformation(
+            employee_repository=RepositoryFactory.get_employee_repository(),
+            product_repository=RepositoryFactory.get_product_repository(),
+            store_repository=RepositoryFactory.get_store_repository(),
+        )
+
+        return sales_info.statistics_store()
+    except ResultsNotFound as nf:
+        return ResponseMessage(
+            code=ResponseMessageCode.EMPTY_RESULTS,
+            status=ResponseStatus.INFO,
+            message=""
+        )
+
+    except Exception as ex:
+        logger.exception(ex)
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="error")
