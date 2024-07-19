@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar, Optional, List
+from typing import Generic, TypeVar, Optional, List, Tuple
 
 T = TypeVar('T')
 K = TypeVar('K')
@@ -12,5 +12,5 @@ class BaseRepository(ABC, Generic[T, K]):
         pass
 
     @abstractmethod
-    def get_all(self, limit: int = None) -> Optional[List[T]]:
+    def get_all(self, limit: int = None, offset: int = None) -> Tuple[Optional[List[T]], int]:
         pass

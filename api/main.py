@@ -20,7 +20,9 @@ fast_api_app.add_middleware(
     allow_headers=["*"],
 )
 
-fast_api_app.include_router(route_employee, prefix="/employees", tags=["employees"])
+API_PREFIX = '/api'
+
+fast_api_app.include_router(route_employee, prefix=f"{API_PREFIX}/employees", tags=["employees"])
 
 
 if __name__ == '__main__':

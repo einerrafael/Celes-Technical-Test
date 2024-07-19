@@ -1,8 +1,6 @@
-from typing import Generic, TypeVar, List
+from typing import Generic, TypeVar, List, Any
 
 from pydantic import BaseModel
-
-Result = TypeVar('Result')
 
 
 class PaginateDTO(BaseModel):
@@ -10,8 +8,8 @@ class PaginateDTO(BaseModel):
     limit: int
 
 
-class PaginatedResults(BaseModel, Generic[Result]):
+class PaginatedResults(BaseModel):
     page: int
     total_pages: int
     total: int
-    results: List[Result]
+    results: List[Any]
