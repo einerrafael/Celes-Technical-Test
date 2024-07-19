@@ -59,3 +59,7 @@ class SalesInformation:
             total=total,
             results=results
         )
+
+    def statistics_employee(self):
+        results = self.__employee_repository.total_sales_avg()
+        return results

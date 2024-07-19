@@ -1,5 +1,6 @@
 from typing import List
 
+from app.domain.entities.consolidated import StatisticTotAvg
 from app.domain.entities.employee import Employee, Sale
 from app.domain.entities.product import Product
 from app.domain.entities.store import Store
@@ -67,3 +68,16 @@ class SparkDataAdapter:
     @classmethod
     def parse_rows_to_stores(cls, rows: list) -> List[Store]:
         return [cls.parse_row_to_store(row) for row in rows]
+
+    @staticmethod
+    def parse_row_to_statistic(row) -> StatisticTotAvg:
+        return StatisticTotAvg(
+            key=row.__getitem__('key'),
+            count=row.__getitem__('count'),
+            avg=row.__getitem__('avg'),
+            total=row.__getitem__('total'),
+        )
+
+    @classmethod
+    def parse_rows_to_statistic(cls, rows: list) -> List[StatisticTotAvg]:
+        return [cls.parse_row_to_statistic(row) for row in rows]

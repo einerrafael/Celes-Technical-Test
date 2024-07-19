@@ -12,11 +12,20 @@ from app.infrastructure.spark_session_builder import SparkSessionBuilder, SparkS
 
 class SparkEmployeeRepository(EmployeeRepository):
 
-    def all_sales_by_employee(self, employee_id: str, limit: int, offset: int):
-        pass
+    def total_sales_avg(self):
+        view_name = "TotalSalesAvgEmployee"
 
-    def sales_total_by_employee(self, employee_id: str, limit: int, offset: int):
-        pass
+        with SparkSessionBuilder() as session:
+            with SparkSessionSQLBuilder(session, view_name) as reader:
+                results = reader.execute(f"SELECT KeyEmployee as key, "
+                                         f"COUNT(KeyEmployee) as count, "
+                                         f"AVG(Amount) as avg, "
+                                         f"SUM(Amount) as total"
+                                         f" FROM {view_name} GROUP BY KeyEmployee ORDER BY 2 desc")
+                results = results.collect()
+                if not any(results):
+                    raise ResultsNotFound()
+                return SparkDataAdapter.parse_rows_to_statistic(results)
 
     def sales_by_employee_date_ranges(self,
                                       employee_id: str,
