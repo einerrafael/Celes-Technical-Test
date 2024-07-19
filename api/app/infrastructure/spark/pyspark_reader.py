@@ -29,7 +29,7 @@ class SparkParquetReader(SparkSessionMixin):
 
     def __init__(self, session: SparkSession, dir_files: str):
         super().__init__(session)
-        self.session.read.parquet(dir_files)
+        self.df = self.session.read.parquet(dir_files)
 
 
 class SQLSparkReader(SparkSessionMixin):
@@ -37,5 +37,7 @@ class SQLSparkReader(SparkSessionMixin):
     def __init__(self, session: SparkSession):
         super().__init__(session)
 
-    def execute(self, sql: str, args):
-        return self.session.sql(sql, args)
+    def execute(self, sql: str, args: dict = None):
+        if args is None:
+            args = {}
+        return self.session.sql(sql, **args)

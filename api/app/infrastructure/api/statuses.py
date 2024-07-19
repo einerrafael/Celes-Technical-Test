@@ -1,0 +1,4 @@
+
+
+class ResultsNotFound(Exception):
+    pass

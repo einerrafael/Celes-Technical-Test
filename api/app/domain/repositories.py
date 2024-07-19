@@ -1,4 +1,5 @@
-from abc import ABC
+from abc import ABC, abstractmethod
+from datetime import datetime
 
 from app.domain.entities.employee import Employee
 from app.domain.entities.product import Product
@@ -7,12 +8,48 @@ from app.infrastructure.repositories.base_repository import BaseRepository
 
 
 class EmployeeRepository(BaseRepository[Employee, str], ABC):
-    pass
+
+    @abstractmethod
+    def total_sales_avg(self):
+        pass
+
+    @abstractmethod
+    def sales_by_employee_date_ranges(self,
+                                      employee_id: str,
+                                      start_date: datetime,
+                                      end_date: datetime,
+                                      limit: int,
+                                      offset: int, ):
+        pass
 
 
 class StoreRepository(BaseRepository[Store, str], ABC):
-    pass
+
+    @abstractmethod
+    def total_sales_avg(self):
+        pass
+
+    @abstractmethod
+    def sales_by_store_date_ranges(self,
+                                   _id: str,
+                                   start_date: datetime,
+                                   end_date: datetime,
+                                   limit: int,
+                                   offset: int, ):
+        pass
 
 
 class ProductRepository(BaseRepository[Product, str], ABC):
-    pass
+
+    @abstractmethod
+    def total_sales_avg(self):
+        pass
+
+    @abstractmethod
+    def sales_by_product_date_ranges(self,
+                                     _id: str,
+                                     start_date: datetime,
+                                     end_date: datetime,
+                                     limit: int,
+                                     offset: int, ):
+        pass

@@ -1,10 +1,12 @@
+from typing import Optional
+
 from pydantic import BaseModel
 
 
 class Product(BaseModel):
-    key: str
-    code: str
-    sub_category_name: str
-    category_name: str
-    brand_name: str
-    name: str
+    key: Optional[str] = None
+    code: Optional[str] = None
+    sub_category_name: Optional[str] = None
+    category_name: Optional[str] = None
+    brand_name: Optional[str] = None
+    name: Optional[str] = None
