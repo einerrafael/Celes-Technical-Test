@@ -1,8 +1,27 @@
+import uvicorn
 from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
 
-app = FastAPI()
+from app.infrastructure.api.route_employee import route_employee
+
+fast_api_app = FastAPI()
 
 
-@app.get("/")
+@fast_api_app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+
+fast_api_app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+fast_api_app.include_router(route_employee, prefix="/employees", tags=["employees"])
+
+
+if __name__ == '__main__':
+    uvicorn.run(fast_api_app)

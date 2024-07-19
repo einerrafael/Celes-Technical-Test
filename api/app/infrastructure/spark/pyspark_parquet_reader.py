@@ -5,8 +5,15 @@ from app.infrastructure.spark.pyspark_reader import SQLSparkReader, SparkParquet
 
 class SparkParquetSQLReader:
 
-    def __init__(self, session: SparkSession, dir_files: str):
+    def __init__(self, session: SparkSession, dir_files: str, view_name: str):
+        self.__view_name = view_name
         self.__parquet_reader = SparkParquetReader(session, dir_files)
+        if view_name:
+            self.__parquet_reader.df.createTempView(view_name)
+
+    @property
+    def view_name(self):
+        return self.__view_name
 
     def __enter__(self) -> SQLSparkReader:
         return SQLSparkReader(self.__parquet_reader.session)
