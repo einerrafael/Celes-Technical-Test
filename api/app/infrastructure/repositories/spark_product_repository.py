@@ -52,8 +52,8 @@ class SparkProductRepository(ProductRepository):
                 return SparkDataAdapter.parse_rows_to_sales(results), total
 
     def get_all(self, limit: int = None, offset: int = None):
-        sql = f"SELECT DISTINCT Products FROM AllEmployees "
-        sql_total = "SELECT COUNT(DISTINCT Products) as total FROM AllEmployees"
+        sql = f"SELECT DISTINCT Products FROM AllProducts "
+        sql_total = "SELECT COUNT(DISTINCT Products) as total FROM AllProducts"
         if limit:
             sql += f" limit {limit}"
         if offset:
@@ -66,7 +66,7 @@ class SparkProductRepository(ProductRepository):
                 total_query = reader.execute(sql_total)
                 total = total_query.collect()[0]['total']
 
-                return SparkDataAdapter.parse_rows_to_employees(results), total
+                return SparkDataAdapter.parse_rows_to_products(results), total
 
     def get_by_id(self, _id: str) -> Optional[Product]:
         with SparkSessionBuilder() as session:

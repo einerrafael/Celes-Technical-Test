@@ -2,7 +2,6 @@ from math import ceil
 
 from app.application.dto.all import PaginatedResults
 from app.application.dto.employees import SalesEmployeeFilterDTO, SalesProductFilterDTO
-from app.domain.entities.employee import Employee
 from app.domain.repositories import EmployeeRepository, ProductRepository
 
 

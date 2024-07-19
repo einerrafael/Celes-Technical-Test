@@ -11,8 +11,6 @@ from app.application.use_cases.crud_product import CRUDProduct
 from app.application.use_cases.sales_information import SalesInformation
 from app.infrastructure.api.statuses import ResultsNotFound
 from app.infrastructure.factory.repository_factory import RepositoryFactory
-from app.infrastructure.repositories.spark_employee_repository import SparkEmployeeRepository
-from app.infrastructure.repositories.spark_product_repository import SparkProductRepository
 
 route_product = APIRouter()
 
