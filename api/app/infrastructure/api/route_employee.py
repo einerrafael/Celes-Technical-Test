@@ -2,12 +2,14 @@ import logging
 from datetime import datetime
 from typing import Union
 
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 
-from app.application.dto.all import PaginateDTO
+from app.application.dto.all import PaginateDTO, ResponseMessage, ResponseMessageCode, ResponseStatus
 from app.application.dto.employees import SalesEmployeeFilterDTO
 from app.application.use_cases.crud_employee import CRUDEmployee
 from app.application.use_cases.sales_employee import SalesEmployee
+from app.infrastructure.api.statuses import ResultsNotFound
 from app.infrastructure.repositories.spark_employee_repository import SparkEmployeeRepository
 
 route_employee = APIRouter()
@@ -30,9 +32,36 @@ def all_employees(page: int = 1,
         )
 
         return crud_employee.all_employees(pagination)
+    except ResultsNotFound as nf:
+        return ResponseMessage(
+            code=ResponseMessageCode.EMPTY_RESULTS,
+            status=ResponseStatus.INFO,
+            message=""
+        )
+
     except Exception as ex:
         logger.exception(ex)
-        return 0
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="error")
+
+@route_employee.get("/{employee_id}")
+def get_employee_by_id(employee_id: str,):
+    try:
+        # Invoke the business logic
+        crud_employee = CRUDEmployee(
+            employee_repository=SparkEmployeeRepository()
+        )
+
+        return crud_employee.get_by_id(employee_id)
+    except ResultsNotFound as nf:
+        return ResponseMessage(
+            code=ResponseMessageCode.EMPTY_RESULTS,
+            status=ResponseStatus.INFO,
+            message=""
+        )
+
+    except Exception as ex:
+        logger.exception(ex)
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="error")
 
 
 @route_employee.get("/{employee_id}/sales")
@@ -59,6 +88,13 @@ def employee_sales(employee_id: str,
         )
 
         return sales_employee.total_sales_employee(input_dto)
+    except ResultsNotFound as nf:
+        return ResponseMessage(
+            code=ResponseMessageCode.EMPTY_RESULTS,
+            status=ResponseStatus.INFO,
+            message=""
+        )
+
     except Exception as ex:
         logger.exception(ex)
-        return 0
+        raise HTTPException(status_code=HTTP_500_INTERNAL_SERVER_ERROR, detail="error")

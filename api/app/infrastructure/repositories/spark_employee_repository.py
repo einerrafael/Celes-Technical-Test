@@ -1,8 +1,10 @@
+from builtins import any
 from datetime import datetime
 from typing import Optional, List
 
 from app.domain.entities.employee import Employee, Sale
 from app.domain.repositories import EmployeeRepository
+from app.infrastructure.api.statuses import ResultsNotFound
 from app.infrastructure.commons.date_utils import DateUtils
 from app.infrastructure.repositories.spark_data_adapter import SparkDataAdapter
 from app.infrastructure.spark_session_builder import SparkSessionBuilder, SparkSessionSQLBuilder
@@ -78,4 +80,6 @@ class SparkEmployeeRepository(EmployeeRepository):
             with SparkSessionSQLBuilder(session, "EmployeeById") as reader:
                 results = reader.execute("SELECT Employees FROM EmployeeById WHERE KeyEmployee = {id}", {'id': _id})
                 results = results.collect()
-                return results
+                if not any(results):
+                    raise ResultsNotFound()
+                return SparkDataAdapter.parse_row_to_employee(results[0])
