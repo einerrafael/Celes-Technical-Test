@@ -6,8 +6,15 @@ from pydantic import BaseModel
 from app.application.dto.all import PaginateDTO
 
 
-class SalesEmployeeFilterDTO(BaseModel):
-    employee_id: str
+class FilterDateRangesDTOWithPag(BaseModel):
     pagination: PaginateDTO
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
+
+
+class SalesEmployeeFilterDTO(FilterDateRangesDTOWithPag, BaseModel):
+    employee_id: str
+
+
+class SalesProductFilterDTO(FilterDateRangesDTOWithPag, BaseModel):
+    product_id: str

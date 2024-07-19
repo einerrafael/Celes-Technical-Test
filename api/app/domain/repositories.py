@@ -19,7 +19,7 @@ class EmployeeRepository(BaseRepository[Employee, str], ABC):
                                       start_date: datetime,
                                       end_date: datetime,
                                       limit: int,
-                                      offset: int,):
+                                      offset: int, ):
         pass
 
     @abstractmethod
@@ -32,4 +32,12 @@ class StoreRepository(BaseRepository[Store, str], ABC):
 
 
 class ProductRepository(BaseRepository[Product, str], ABC):
-    pass
+
+    @abstractmethod
+    def sales_by_product_date_ranges(self,
+                                     _id: str,
+                                     start_date: datetime,
+                                     end_date: datetime,
+                                     limit: int,
+                                     offset: int, ):
+        pass

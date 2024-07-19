@@ -1,6 +1,7 @@
 from typing import List
 
 from app.domain.entities.employee import Employee, Sale
+from app.domain.entities.product import Product
 
 
 class SparkDataAdapter:
@@ -18,6 +19,21 @@ class SparkDataAdapter:
     @classmethod
     def parse_rows_to_employees(cls, rows: list) -> List[Employee]:
         return [cls.parse_row_to_employee(row) for row in rows]
+
+    @staticmethod
+    def parse_row_to_product(row) -> Product:
+        return Product(
+            key=row[0].__getitem__('KeyProduct'),
+            code=row[0].__getitem__('ProductCode'),
+            sub_category_name=row[0].__getitem__('SubCategoryName'),
+            category_name=row[0].__getitem__('CategoryName'),
+            brand_name=row[0].__getitem__('BrandName'),
+            name=row[0].__getitem__('ProductName'),
+        )
+
+    @classmethod
+    def parse_rows_to_products(cls, rows: list) -> List[Product]:
+        return [cls.parse_row_to_product(row) for row in rows]
 
     @staticmethod
     def parse_row_to_sale(row) -> Sale:
