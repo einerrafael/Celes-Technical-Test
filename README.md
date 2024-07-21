@@ -12,9 +12,9 @@
 
 ### Instalación 
 
-1. Clonar el repositorio y en la ruta clonada acceder a la carpeta <code>assets/data/parquets</code> y colocar los .parquet adjuntos en el instructivo de esta prueba.
+1. Clonar el repositorio, en la ruta clonada acceder a la carpeta <code>assets/data/parquets</code> y colocar los <code>.parquet</code> adjuntos en el instructivo de esta prueba. Adicionalmente colocar en la ruta <code>assets/credentials</code> el archivo adjunto `firebase-credentials.json`
 
-![parquets](docs/images/parquets.png)
+![assets](docs/images/assets.png)
 
 2. Ingresar al directorio <code>api</code> y crear un ambiente virtual para los paquetes en python y activarlo
 
