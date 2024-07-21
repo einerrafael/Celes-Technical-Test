@@ -2,7 +2,7 @@ import logging
 from datetime import datetime
 from typing import Union
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from starlette.status import HTTP_500_INTERNAL_SERVER_ERROR
 
 from app.application.dto.all import PaginateDTO, ResponseMessage, ResponseMessageCode, ResponseStatus
@@ -10,9 +10,10 @@ from app.application.dto.employees import SalesProductFilterDTO
 from app.application.uses_cases.crud_product import CRUDProduct
 from app.application.uses_cases.sales_information import SalesInformation
 from app.infrastructure.api.statuses import ResultsNotFound
+from app.infrastructure.auth.auth_manager import verify_token
 from app.infrastructure.factory.repository_factory import RepositoryFactory
 
-route_product = APIRouter()
+route_product = APIRouter(dependencies=[Depends(verify_token)])
 
 logger = logging.getLogger(__name__)
 

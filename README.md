@@ -30,19 +30,35 @@ $source env/bin/activate
 $(env) pip3 install -r requirements.txt
 ```
 
-4. Run Microservicio (2 formas)
+4. Crear una copia del archivo `.env.template` y  nombrarlo `.env`, llenarlo con los datos especificados en el correo.
+
+5. Run Microservicio (2 formas)
 
 <code>productivo</code>
 ```bash
 $(env) python main.py
 ```
 
+<code>Server: http://127.0.0.1:8000</code>
+
 <code>Desarrollo</code>
 ```bash
 $(env) fastapi dev main.py
 ```
 
-5. (Opcional) Run UnitTesting
+<code>Server: http://127.0.0.1:8000</code>
+
+<code>Docker</code>
+```bash
+$docker build -t celes-test .
+```
+
+```bash
+$docker run -d --name celestest -p 80:80 celes-test
+```
+<code>Server: http://127.0.0.1:80</code>
+
+6. (Opcional) Run UnitTesting
 
 ```bash
 $(env) pytest
