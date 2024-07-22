@@ -1,9 +1,9 @@
 import json
 import os
 
-import requests
 from firebase_admin import credentials, initialize_app, auth
 from app.infrastructure.auth.auth_provider import AuthProvider, AuthEmailPassword, AuthSuccessData, InvalidCredentials
+from app.infrastructure.commons.http_client import HttpClient
 from app.infrastructure.config.settings import environment_settings
 
 CREDENTIALS_PATH = os.environ.get("FIREBASE_JSON_CREDENTIALS", "./assets/credentials/firebase-credentials.json")
@@ -17,6 +17,9 @@ class FirebaseAuthProvider(AuthProvider):
     gcloud_identity_url = "https://identitytoolkit.googleapis.com/v1"
     firebase_api_key = environment_settings.FIREBASE_WEB_API_KEY or ''
 
+    def __init__(self, client: HttpClient = HttpClient()):
+        self.__http_client = client
+
     def login_with_email_password(self, payload: AuthEmailPassword):
         full_url = f"{self.gcloud_identity_url}/accounts:signInWithPassword?key={self.firebase_api_key}"
 
@@ -29,8 +32,7 @@ class FirebaseAuthProvider(AuthProvider):
         headers = {
             'Content-Type': 'application/json'
         }
-
-        response = requests.request("POST", full_url, headers=headers, data=payload)
+        response = self.__http_client.post(full_url, headers=headers, data=payload)
 
         if response.ok:
             json_data = response.json()
